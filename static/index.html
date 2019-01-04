@@ -86,6 +86,7 @@
           <optgroup label="Operation">
             <option value="colorburn">colorburn</option>
             <option value="screen">screen</option>
+            <!-- <option value="edge-detect">edge-detect</option> -->
           </optgroup>
       </select>
       <span id="filter_msg"></span>
@@ -133,6 +134,8 @@
           });
       var edit_layer = new ol.layer.Vector( { source: new ol.source.Vector() })
 
+      var zoomFactorDelta = 5;
+
       var map = new Map({
         layers: [
           static_layer, edit_layer
@@ -141,9 +144,10 @@
         view: new View({
           projection: projection,
           center: [512, 512],
-          zoom: 1,
-          maxZoom: 7,
-          minZoom: -2
+          minZoom: -2,
+          zoomFactor: Math.pow(2, 1/zoomFactorDelta),
+          zoom: 0.1 * zoomFactorDelta,
+          maxZoom: 20 * zoomFactorDelta
         }),
         interactions: ol.interaction.defaults({
           dragPan: false, 
@@ -161,7 +165,8 @@
           DrawPoint:false,
           DrawLine:false,
           Offset:false,
-          Split:false
+          Split:false,
+          DrawHole: false
         }});
       map.addControl(edit);
 

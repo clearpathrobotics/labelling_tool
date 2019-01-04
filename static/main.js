@@ -375,6 +375,8 @@ Control.prototype.updateAvailableLabels = function ()
   var labels = $("#labels");
   labels.text(""); // clear current labels.
 
+  var label_clicked = false;
+
   self.entry_shown = new Set([]);
   self.entry_labels = {};
   if (self.entry_info["config"]["classes"] == undefined)
@@ -458,11 +460,19 @@ Control.prototype.updateAvailableLabels = function ()
     labels.append(button);
 
     // By default, select the 0th index label.
-    if (index == 0)
+    // if (index == 0)
+    if (label == self.entry_current_label)
     {
       button.click();
+      label_clicked = true;
     }
   });
+
+  if (!label_clicked)
+  {
+    labels[0].click();
+  }
+
 }
 
 /**
@@ -663,6 +673,10 @@ Control.prototype.changeFilter = function(event)
     case 'screen':
       self.applyFilter("screen", 0.9)
       break;
+    case 'edge-detect':
+      self.applyFilter("edge-detect", 0.9)
+
+      break;
   default:
     console.log("nothing");
     {
@@ -690,9 +704,22 @@ Control.prototype.applyFilter = function(style, strength)
     var ctx = canvas.getContext("2d");
     ctx.drawImage(this, 0, 0);  // Copy the image onto the canvas
 
-    // Set composite style.
-    ctx.globalCompositeOperation = style;
-    ctx.globalAlpha = strength;
+    if (style != "edge-detect")
+    {
+      // Set composite style.
+      ctx.globalCompositeOperation = style;
+      ctx.globalAlpha = strength;
+    }
+    else
+    {
+      for (i = 0; i < w; i++)
+      {
+        console.log("Loop " + i);
+      }
+    }
+
+    console.log('Done');
+
     ctx.drawImage(canvas, 0, 0, w, h);  // draw the image onto itself with the operation.
 
     // Update the openlayers image to use the created filtered image.
