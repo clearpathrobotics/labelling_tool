@@ -52,6 +52,8 @@ class Image:
         self.path = path
         self.data_path = sidecar_path[0:sidecar_path.rindex(".")] + ".json"
 
+        print(self.data_path, os.path.isfile(self.data_path))
+
     def __repr__(self):
         return "<{} - ({})>".format(self.path, ", ".join([x["label"] for x in self.config["classes"]]))
 

@@ -606,6 +606,8 @@ Control.prototype.updateAvailableLabels = function ()
   var labels = $("#labels");
   labels.text(""); // clear current labels.
 
+  var label_clicked = false;
+
   self.entry_shown = new Set([]);
   self.entry_labels = {};
   if (self.entry_info["config"]["classes"] == undefined)
@@ -1005,9 +1007,22 @@ Control.prototype.applyFilter = function(style, strength)
     var ctx = canvas.getContext("2d");
     ctx.drawImage(this, 0, 0);  // Copy the image onto the canvas
 
-    // Set composite style.
-    ctx.globalCompositeOperation = style;
-    ctx.globalAlpha = strength;
+    if (style != "edge-detect")
+    {
+      // Set composite style.
+      ctx.globalCompositeOperation = style;
+      ctx.globalAlpha = strength;
+    }
+    else
+    {
+      for (i = 0; i < w; i++)
+      {
+        console.log("Loop " + i);
+      }
+    }
+
+    console.log('Done');
+
     ctx.drawImage(canvas, 0, 0, w, h);  // draw the image onto itself with the operation.
 
     // Update the openlayers image to use the created filtered image.
