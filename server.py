@@ -29,6 +29,7 @@ import argparse
 import io
 
 curdir = os.path.join(os.getcwd(), os.path.dirname(__file__)) 
+homedir = os.path.expanduser("~")
 
 # https://stackoverflow.com/a/36584863
 def extend_dict(extend_me, extend_by):
@@ -48,8 +49,8 @@ class Image:
     def __init__(self, path, config):
         """Initialise an image given the path and the configuration that was created for this entry."""
         self.config = config
-        self.path = path
-        self.data_path = path[0:path.rindex(".")] + ".json"
+        self.path = path.replace("~", homedir)
+        self.data_path = self.path[0:self.path.rindex(".")] + ".json"
 
         print(self.data_path, os.path.isfile(self.data_path))
 
