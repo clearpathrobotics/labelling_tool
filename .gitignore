@@ -1,4 +1,5 @@
 venv
+labelling_tool_venv
 __pycache__
 target
 label_test
