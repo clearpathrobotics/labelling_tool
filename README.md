@@ -1,6 +1,7 @@
 Labelling Tool
 ==============
 
+
 [Labelling Tool](https://github.com/iwanders/labelling_tool), a tool to annotate images by drawing polygons on them. It uses a webinterface as frontend and a very thin Python server as backend.
 
 ![Screenshot labelling tool](/../master/screenshot.png "A screenshot of the webinterface.")
